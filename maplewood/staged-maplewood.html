@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:," />
+    <title>Maplewood Lanes — Campaign Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #0b0d10;
+        --bg-raise: #12151b;
+        --bg-card: #151922;
+        --bg-card-2: #1a1f2b;
+        --line: #262c3a;
+        --line-soft: #1d222e;
+        --ink: #f2f0ea;
+        --ink-2: #b9bdc9;
+        --ink-3: #7d8494;
+        --amber: #e8a33d;
+        --amber-bright: #f5bc5e;
+        --amber-soft: rgba(232, 163, 61, 0.12);
+        --teal: #3ec6b8;
+        --green: #3ddc84;
+        --green-soft: rgba(61, 220, 132, 0.12);
+        --radius: 14px;
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(900px 480px at 85% -120px, rgba(232, 163, 61, 0.09), transparent 60%),
+          radial-gradient(700px 420px at -10% 30%, rgba(62, 198, 184, 0.05), transparent 55%),
+          var(--bg);
+        color: var(--ink);
+        font-family: "Archivo", system-ui, -apple-system, sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+        min-height: 100vh;
+      }
+      .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px 56px; }
+      .num, .kpi-num, td, .fstep-num { font-variant-numeric: tabular-nums; }
+
+      .topbar {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 16px; padding: 20px 0 18px;
+        border-bottom: 1px solid var(--line-soft);
+      }
+      .brand { display: flex; align-items: center; gap: 11px; }
+      .brand-mark {
+        width: 34px; height: 34px; border-radius: 9px; flex: none;
+        background: var(--amber);
+        display: grid; place-items: center;
+        font-weight: 800; font-size: 19px; color: #171106; letter-spacing: -0.02em;
+      }
+      .brand-name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+      .brand-name span { color: var(--ink-3); font-weight: 500; }
+      .topbar-meta {
+        font-family: "JetBrains Mono", monospace; font-size: 11.5px;
+        color: var(--ink-3); text-align: right; letter-spacing: 0.02em; line-height: 1.7;
+      }
+      .topbar-meta strong { color: var(--ink-2); font-weight: 500; }
+
+      .hero { padding: 38px 0 8px; }
+      .hero-kicker {
+        font-family: "JetBrains Mono", monospace; font-size: 12px;
+        letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-bright);
+        margin: 0 0 12px;
+      }
+      h1 {
+        margin: 0; font-size: clamp(34px, 6vw, 54px); line-height: 1.04;
+        font-weight: 800; letter-spacing: -0.025em;
+      }
+      .hero-sub {
+        margin: 14px 0 0; color: var(--ink-2); font-size: 17px; max-width: 640px;
+      }
+
+      section { margin-top: 46px; }
+      .sec-head {
+        display: flex; align-items: baseline; justify-content: space-between;
+        gap: 14px; margin-bottom: 16px; flex-wrap: wrap;
+      }
+      h2 { margin: 0; font-size: 21px; font-weight: 700; letter-spacing: -0.015em; }
+      .sec-note {
+        font-family: "JetBrains Mono", monospace; font-size: 11.5px;
+        color: var(--ink-3); letter-spacing: 0.03em;
+      }
+      .card {
+        background: var(--bg-card); border: 1px solid var(--line);
+        border-radius: var(--radius);
+      }
+
+      .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+      .kpi {
+        background: linear-gradient(180deg, var(--bg-card-2), var(--bg-card));
+        border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 20px 20px 16px;
+      }
+      .kpi-label {
+        font-size: 12.5px; font-weight: 600; letter-spacing: 0.09em;
+        text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px;
+      }
+      .kpi-num {
+        font-size: clamp(30px, 4vw, 40px); font-weight: 800; letter-spacing: -0.03em;
+        line-height: 1;
+      }
+      .kpi-sub { margin: 10px 0 0; font-size: 13px; color: var(--ink-2); }
+
+      .chart-card { padding: 24px 24px 14px; position: relative; }
+      .chart-legend {
+        display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 8px;
+        font-size: 13px; color: var(--ink-2); font-weight: 600; align-items: center;
+      }
+      .chart-legend .sw {
+        display: inline-block; width: 12px; height: 12px; border-radius: 3px;
+        margin-right: 7px; vertical-align: -1px;
+      }
+      .sw-bar { background: var(--amber); }
+      .sw-line { background: var(--teal); border-radius: 50% !important; width: 10px !important; height: 10px !important; }
+      .chart-stats {
+        display: flex; gap: 22px; flex-wrap: wrap; margin-left: auto;
+        font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--ink-3); font-weight: 400;
+      }
+      .chart-stats strong { color: var(--ink-2); font-weight: 500; }
+      .chart-wrap { position: relative; }
+      .chart-wrap svg { display: block; width: 100%; height: auto; }
+      .chart-tip {
+        position: absolute; pointer-events: none; opacity: 0; transition: opacity 0.12s;
+        background: #241f16; border: 1px solid var(--line); border-radius: 9px;
+        padding: 9px 12px; font-size: 12.5px; line-height: 1.5; color: var(--ink-2);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45); white-space: nowrap; z-index: 3;
+      }
+      .chart-tip strong { color: var(--ink); font-weight: 700; }
+      .chart-tip .t-date {
+        font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--ink-3);
+        letter-spacing: 0.05em; text-transform: uppercase;
+      }
+      .chart-note { margin: 8px 0 6px; font-size: 12px; color: var(--ink-3); font-family: "JetBrains Mono", monospace; letter-spacing: 0.03em; }
+
+      .table-card { padding: 6px 10px; overflow: hidden; }
+      table { width: 100%; border-collapse: collapse; }
+      th, td {
+        padding: 13px 14px; text-align: right; font-size: 14.5px;
+        border-bottom: 1px solid var(--line-soft);
+      }
+      th {
+        font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 600;
+        letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-3);
+      }
+      th:first-child, td:first-child { text-align: left; }
+      tbody tr:last-child td { border-bottom: none; }
+      td.name { font-weight: 700; font-size: 15px; color: var(--ink); }
+      .pill {
+        display: inline-flex; align-items: center; gap: 6px;
+        font-family: "JetBrains Mono", monospace; font-size: 10.5px; font-weight: 600;
+        letter-spacing: 0.09em; padding: 4px 9px; border-radius: 999px; white-space: nowrap;
+      }
+      .pill.live { background: var(--green-soft); color: #8fe9b8; border: 1px solid rgba(61, 220, 132, 0.3); }
+      .pill.paused { background: rgba(125, 132, 148, 0.12); color: var(--ink-2); border: 1px solid var(--line); }
+      .pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex: none; }
+      .pill.paused .dot { background: var(--ink-3); }
+      .table-foot {
+        margin: 14px 2px 0; font-size: 14px; color: var(--ink-2);
+      }
+      .table-foot strong { color: var(--ink); }
+
+      .funnel-card { padding: 24px 24px 18px; }
+      .funnel-strip {
+        display: flex; align-items: flex-start; justify-content: space-between;
+        gap: 4px;
+      }
+      .fstep { flex: 1; text-align: center; min-width: 0; }
+      .fstep-num {
+        font-size: clamp(26px, 3.4vw, 36px); font-weight: 800; letter-spacing: -0.025em;
+        line-height: 1;
+      }
+      .fstep-label {
+        margin-top: 7px; font-size: 13px; font-weight: 600; color: var(--ink-2);
+      }
+      .farrow {
+        flex: none; align-self: center; color: var(--amber);
+        font-size: 20px; font-weight: 700; line-height: 1; padding: 0 2px;
+      }
+      .funnel-note {
+        margin: 20px 0 4px; font-size: 14.5px; color: var(--ink-2);
+        border-top: 1px solid var(--line-soft); padding-top: 14px;
+      }
+
+      .highlights { list-style: none; margin: 0; padding: 8px 24px; }
+      .highlights li {
+        display: flex; gap: 13px; align-items: flex-start;
+        padding: 15px 0; font-size: 15.5px; color: var(--ink-2);
+        border-bottom: 1px solid var(--line-soft);
+      }
+      .highlights li:last-child { border-bottom: none; }
+      .highlights li strong { color: var(--ink); font-weight: 700; }
+      .highlights .tick {
+        flex: none; width: 8px; height: 8px; border-radius: 50%;
+        background: var(--amber); margin-top: 8px;
+      }
+
+      .aud-card { padding: 24px 24px 10px; }
+      .aud-sub {
+        font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 600;
+        letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-3);
+        margin: 0 0 14px;
+      }
+      .aud-rows { display: flex; flex-direction: column; gap: 10px; }
+      .aud-row {
+        display: grid; grid-template-columns: 130px 1fr 96px;
+        align-items: center; gap: 14px;
+      }
+      .aud-label { font-size: 14px; font-weight: 600; color: var(--ink-2); }
+      .aud-track { background: var(--line-soft); border-radius: 5px; height: 12px; overflow: hidden; }
+      .aud-fill { display: block; height: 100%; background: var(--amber); border-radius: 5px; }
+      .aud-fill.teal { background: var(--teal); }
+      .aud-clicks {
+        font-size: 13.5px; color: var(--ink-3); text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      .aud-clicks strong { color: var(--ink); font-weight: 700; }
+      .aud-summary { margin: 16px 0 6px; font-size: 15px; color: var(--ink-2); }
+      .aud-summary strong { color: var(--ink); }
+      .aud-block { border-top: 1px solid var(--line-soft); padding-top: 18px; margin-top: 16px; }
+      .target-list { list-style: none; margin: 0; padding: 0; }
+      .target-list li {
+        display: flex; gap: 13px; align-items: flex-start;
+        padding: 9px 0; font-size: 15px; color: var(--ink-2);
+      }
+      .target-list li strong { color: var(--ink); font-weight: 700; }
+      .target-list .tick {
+        flex: none; width: 8px; height: 8px; border-radius: 50%;
+        background: var(--teal); margin-top: 8px;
+      }
+      .saved-line { margin: 10px 0 6px; font-size: 14.5px; color: var(--ink-2); }
+      .saved-line strong { color: var(--ink); }
+      .mini-stats {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+        padding-bottom: 14px;
+      }
+      .mini-stat { text-align: center; padding: 6px 4px 0; }
+      .mini-stat-num {
+        font-size: clamp(20px, 2.6vw, 26px); font-weight: 800; letter-spacing: -0.02em;
+        line-height: 1.15;
+      }
+      .mini-stat-label { margin-top: 5px; font-size: 13px; color: var(--ink-2); font-weight: 600; }
+
+      footer {
+        margin-top: 52px; padding-top: 20px; border-top: 1px solid var(--line-soft);
+        display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+        font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--ink-3);
+        letter-spacing: 0.03em;
+      }
+
+      @media (max-width: 860px) {
+        .kpis { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 640px) {
+        .table-card { padding: 4px 16px; }
+        table, tbody, tr, td { display: block; width: 100%; }
+        thead { display: none; }
+        tbody tr { padding: 12px 0 6px; border-bottom: 1px solid var(--line-soft); }
+        tbody tr:last-child { border-bottom: none; }
+        td {
+          display: flex; justify-content: space-between; align-items: baseline;
+          gap: 16px; text-align: right; border-bottom: none; padding: 5px 0;
+        }
+        td::before {
+          content: attr(data-label);
+          font-family: "JetBrains Mono", monospace; font-size: 10.5px; font-weight: 600;
+          letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-3);
+          text-align: left; flex: none;
+        }
+        td.name { display: block; text-align: left; padding-bottom: 8px; }
+        td.name::before { content: none; }
+        .funnel-strip { flex-direction: column; align-items: center; gap: 10px; }
+        .farrow { transform: rotate(90deg); padding: 2px 0; }
+        .chart-stats { margin-left: 0; }
+        .aud-row { grid-template-columns: 108px 1fr 84px; gap: 10px; }
+        .mini-stats { grid-template-columns: 1fr; gap: 8px; }
+      }
+      @media (max-width: 520px) {
+        .wrap { padding: 0 16px 44px; }
+        .topbar-meta { display: none; }
+        .hero { padding-top: 28px; }
+        .funnel-card, .chart-card, .aud-card { padding: 20px 16px 10px; }
+        .highlights { padding: 4px 18px; }
+        .kpi { padding: 16px 14px 13px; min-width: 0; }
+        .kpi-num { font-size: 25px; }
+        .kpi-sub { overflow-wrap: anywhere; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="wrap">
+
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">M</div>
+          <div class="brand-name">MainDine <span>· Campaign Portal</span></div>
+        </div>
+        <div class="topbar-meta">
+          Ad period <strong>Sep 26 – Oct 25, 2026</strong><br />
+          Updated <strong>Oct 26, 2026</strong>
+        </div>
+      </header>
+
+      <div class="hero">
+        <p class="hero-kicker">Campaign Performance Report</p>
+        <h1>Maplewood Lanes</h1>
+        <p class="hero-sub">Your advertising results — last 30 days (Sep 26 – Oct 25, 2026).</p>
+      </div>
+
+      <section aria-label="Key numbers">
+        <div class="sec-head">
+          <h2>The numbers</h2>
+          <span class="sec-note">LAST 30 DAYS · SEP 26 – OCT 25, 2026</span>
+        </div>
+        <div class="kpis">
+          <div class="kpi">
+            <p class="kpi-label">People who saw your ads</p>
+            <div class="kpi-num" data-count="138342">138,342</div>
+            <p class="kpi-sub">People around Omaha your ads reached</p>
+          </div>
+          <div class="kpi">
+            <p class="kpi-label">Times your ads were shown</p>
+            <div class="kpi-num" data-count="455069">455,069</div>
+            <p class="kpi-sub">Total ad views this period</p>
+          </div>
+          <div class="kpi">
+            <p class="kpi-label">People who clicked to your website</p>
+            <div class="kpi-num" data-count="2419">2,419</div>
+            <p class="kpi-sub">Taps from your ads to maplewoodlanesomaha.com</p>
+          </div>
+          <div class="kpi">
+            <p class="kpi-label">Ad spend</p>
+            <div class="kpi-num">$1,303.02</div>
+            <p class="kpi-sub">about $0.54 per click</p>
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="Daily ad activity">
+        <div class="sec-head">
+          <h2>Daily ad activity</h2>
+          <span class="sec-note">SEP 26 – OCT 25, 2026</span>
+        </div>
+        <div class="card chart-card">
+          <div class="chart-legend">
+            <span><span class="sw sw-bar"></span>Times your ads were shown</span>
+            
+            <span class="chart-stats">
+              <span>BEST DAY <strong>Oct 11 · 19,181</strong></span>
+              <span>DAILY AVG <strong>15,169</strong></span>
+            </span>
+          </div>
+          <div class="chart-wrap" id="chartWrap">
+            <div class="chart-tip" id="chartTip"></div>
+          </div>
+                  </div>
+      </section>
+
+      <section aria-label="Campaign results">
+        <div class="sec-head">
+          <h2>Your campaigns</h2>
+          <span class="sec-note">LAST 30 DAYS · SEP 26 – OCT 25, 2026</span>
+        </div>
+        <div class="card table-card">
+          <table>
+            <thead>
+              <tr><th scope="col">Campaign</th><th scope="col">Status</th><th scope="col">People reached</th><th scope="col">Clicks</th><th scope="col">Spend</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">Promo Campaigns - 2026</td>
+                <td data-label="Status"><span class="pill live"><span class="dot"></span>RUNNING</span></td>
+                <td data-label="People reached">40,126</td> <td data-label="Clicks">1,558</td> <td data-label="Spend">—</td>
+              </tr>
+              <tr>
+                <td class="name">Leagues Campaigns - 2026/2027</td>
+                <td data-label="Status"><span class="pill live"><span class="dot"></span>RUNNING</span></td>
+                <td data-label="People reached">44,646</td> <td data-label="Clicks">487</td> <td data-label="Spend">—</td>
+              </tr>
+              <tr>
+                <td class="name">Awareness Campaigns - 2026</td>
+                <td data-label="Status"><span class="pill live"><span class="dot"></span>RUNNING</span></td>
+                <td data-label="People reached">70,111</td> <td data-label="Clicks">187</td> <td data-label="Spend">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-foot">Last 7 days figures for this period are pending refresh.</p>
+      </section>
+
+      <section aria-label="Audience and targeting">
+        <div class="sec-head">
+          <h2>Who's seeing your ads &amp; how they're targeted</h2>
+          <span class="sec-note">LAST 30 DAYS · SEP 26 – OCT 25, 2026</span>
+        </div>
+        <div class="card aud-card">
+          <p class="aud-sub">Who clicked your ads</p>
+          <div class="aud-rows"><p>Who clicked, by age and gender, is pending refresh for this period.</p></div>
+          <p class="aud-summary">Audience summary for this period is pending refresh.</p>
+
+          <div class="aud-block">
+            <p class="aud-sub">How your ads are targeted</p>
+            <ul class="target-list">
+              <li><span class="tick" aria-hidden="true"></span><span><strong>Local Moms:</strong> moms within 10 miles of the lanes, targeted by parenting interests.</span></li>
+              <li><span class="tick" aria-hidden="true"></span><span><strong>League families:</strong> parents who look like the people visiting your leagues page (a “lookalike” audience built from your own visitors).</span></li>
+              <li><span class="tick" aria-hidden="true"></span><span><strong>Promos:</strong> open to everyone within 15 miles — Meta's system finds the people most likely to click.</span></li>
+            </ul>
+            <p class="saved-line">Saved audience sizes for this period are pending refresh.</p>
+          </div>
+
+          <div class="aud-block">
+            <p class="aud-sub">Where &amp; when</p>
+            <div class="mini-stats">
+              <div class="mini-stat">
+                <div class="mini-stat-num">—</div>
+                <div class="mini-stat-label">of views on phones</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-stat-num">—</div>
+                <div class="mini-stat-label">Busiest hours</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-stat-num">Nebraska &amp; Iowa</div>
+                <div class="mini-stat-label">Omaha metro</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="Website activity">
+        <div class="sec-head">
+          <h2>On your website</h2>
+          <span class="sec-note">SEP 26 – OCT 25, 2026</span>
+        </div>
+        <div class="card funnel-card">
+          <div class="funnel-strip">
+            <div class="fstep">
+              <div class="fstep-num">—</div>
+              <div class="fstep-label">Page views</div>
+            </div>
+            <div class="farrow" aria-hidden="true">→</div>
+            <div class="fstep">
+              <div class="fstep-num">—</div>
+              <div class="fstep-label">Checkouts started</div>
+            </div>
+            <div class="farrow" aria-hidden="true">→</div>
+            <div class="fstep">
+              <div class="fstep-num">—</div>
+              <div class="fstep-label">People contacted you</div>
+            </div>
+            <div class="farrow" aria-hidden="true">→</div>
+            <div class="fstep">
+              <div class="fstep-num">—</div>
+              <div class="fstep-label">New subscribers</div>
+            </div>
+          </div>
+          <p class="funnel-note">Recorded activity on maplewoodlanesomaha.com, Sep 26 – Oct 25, 2026.</p>
+        </div>
+      </section>
+
+      <section aria-label="Highlights">
+        <div class="sec-head">
+          <h2>Highlights</h2>
+          <span class="sec-note">LAST 30 DAYS</span>
+        </div>
+        <div class="card">
+          <ul class="highlights"><li><span><strong>Best day: Oct 11</strong> — 19,181 times your ads were shown, the strongest day of the period.</span></li><li><span><strong>Promo Campaigns drove the most clicks:</strong> 1,558 of this period's 2,419 clicks.</span></li></ul>
+        </div>
+      </section>
+
+      <footer>
+        <span>UPDATED OCT 26, 2026</span>
+        <span>MANAGED BY MAINDINE</span>
+      </footer>
+
+    </div>
+
+    <script>
+      (function () {
+        var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function fmt(n) { return n.toLocaleString("en-US"); }
+        var counters = document.querySelectorAll("[data-count]");
+        function runCount(el) {
+          var target = parseInt(el.getAttribute("data-count"), 10);
+          if (reduceMotion || !target) { if (target) el.textContent = fmt(target); return; }
+          var dur = 1100, t0 = null;
+          function step(ts) {
+            if (!t0) t0 = ts;
+            var p = Math.min((ts - t0) / dur, 1);
+            var eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = fmt(Math.round(target * eased));
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+        if ("IntersectionObserver" in window && !reduceMotion) {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) { runCount(e.target); io.unobserve(e.target); }
+            });
+          }, { threshold: 0.4 });
+          counters.forEach(function (el) { io.observe(el); });
+        } else {
+          counters.forEach(runCount);
+        }
+
+        var daily = [
+          ["Sep 26", 13949], ["Sep 27", 18883], ["Sep 28", 15038], ["Sep 29", 14571], ["Sep 30", 13533], ["Oct 1", 13240], ["Oct 2", 11947], ["Oct 3", 10741], ["Oct 4", 15884], ["Oct 5", 14887], ["Oct 6", 11631], ["Oct 7", 11129], ["Oct 8", 13870], ["Oct 9", 12764], ["Oct 10", 14185], ["Oct 11", 19181], ["Oct 12", 16309], ["Oct 13", 16288], ["Oct 14", 15026], ["Oct 15", 14707], ["Oct 16", 18485], ["Oct 17", 18676], ["Oct 18", 17170], ["Oct 19", 16769], ["Oct 20", 17930], ["Oct 21", 15111], ["Oct 22", 15319], ["Oct 23", 14219], ["Oct 24", 15164], ["Oct 25", 18463]
+        ];
+
+        var W = 1040, H = 340;
+        var padL = 46, padR = 14, padT = 16, padB = 34;
+        var plotW = W - padL - padR, plotH = H - padT - padB;
+        var maxImp = 20000;
+        var n = daily.length;
+        var slot = plotW / n;
+        var barW = Math.min(slot * 0.62, 22);
+
+        function x(i) { return padL + slot * i + slot / 2; }
+        function yImp(v) { return padT + plotH - (v / maxImp) * plotH; }
+
+        var svg = [];
+        svg.push('<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Bar chart of daily ad impressions, September 25 to October 24 2026. Impressions peaked at 19,181 on October 11.">');
+
+        [0, 5000, 10000, 15000, 20000].forEach(function (v) {
+          var gy = yImp(v);
+          svg.push('<line x1="' + padL + '" y1="' + gy + '" x2="' + (W - padR) + '" y2="' + gy + '" stroke="' + (v === 0 ? "#3a342e" : "#211d19") + '" stroke-width="1"/>');
+          svg.push('<text x="' + (padL - 9) + '" y="' + (gy + 4) + '" text-anchor="end" font-size="11" fill="#7d8494" font-family="JetBrains Mono, monospace">' + (v === 0 ? "0" : (v / 1000) + "k") + '</text>');
+        });
+
+        [[0, 6], [7, 13], [14, 20], [21, 27]].forEach(function (pair) {
+          var sx = padL + slot * pair[0];
+          svg.push('<rect x="' + sx + '" y="' + padT + '" width="' + (slot * 2) + '" height="' + plotH + '" fill="rgba(227,179,76,0.045)"/>');
+        });
+
+        daily.forEach(function (d, i) {
+          var bx = x(i) - barW / 2, by = yImp(d[1]);
+          svg.push('<rect class="bar" data-i="' + i + '" x="' + bx.toFixed(1) + '" y="' + by.toFixed(1) + '" width="' + barW + '" height="' + (padT + plotH - by).toFixed(1) + '" rx="3" fill="#e8a33d"/>');
+        });
+
+        [0, 5, 10, 15, 20, 25, 29].forEach(function (i) {
+          svg.push('<text x="' + x(i) + '" y="' + (H - 12) + '" text-anchor="middle" font-size="11" fill="#7d8494" font-family="JetBrains Mono, monospace">' + daily[i][0].toUpperCase() + '</text>');
+        });
+
+        daily.forEach(function (d, i) {
+          svg.push('<rect class="hit" data-i="' + i + '" x="' + (padL + slot * i) + '" y="' + padT + '" width="' + slot + '" height="' + plotH + '" fill="transparent"/>');
+        });
+
+        svg.push("</svg>");
+
+        var wrap = document.getElementById("chartWrap");
+        var tip = document.getElementById("chartTip");
+        var holder = document.createElement("div");
+        holder.innerHTML = svg.join("");
+        wrap.insertBefore(holder, tip);
+
+        var bars = wrap.querySelectorAll(".bar");
+        function showTip(i) {
+          var d = daily[i];
+          tip.innerHTML = '<span class="t-date">' + d[0] + ', 2026</span><br><strong>' +
+            fmt(d[1]) + '</strong> times ads were shown';
+          bars.forEach(function (b, j) { b.setAttribute("fill", j === i ? "#f5bc5e" : "#e8a33d"); });
+          var rect = wrap.getBoundingClientRect();
+          var px = (x(i) / W) * rect.width;
+          tip.style.opacity = "1";
+          var tw = tip.offsetWidth;
+          var left = Math.max(0, Math.min(px - tw / 2, rect.width - tw));
+          tip.style.left = left + "px";
+          tip.style.top = "2px";
+        }
+        function hideTip() {
+          tip.style.opacity = "0";
+          bars.forEach(function (b) { b.setAttribute("fill", "#e8a33d"); });
+        }
+        wrap.querySelectorAll(".hit").forEach(function (h) {
+          var i = parseInt(h.getAttribute("data-i"), 10);
+          h.addEventListener("mouseenter", function () { showTip(i); });
+          h.addEventListener("click", function () { showTip(i); });
+        });
+        wrap.addEventListener("mouseleave", hideTip);
+      })();
+    </script>
+  </body>
+</html>
