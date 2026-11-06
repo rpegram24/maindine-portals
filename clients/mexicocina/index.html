@@ -353,6 +353,16 @@
         border-radius: 999px;
         margin: 4px 0 12px;
       }
+      .status.paused {
+        background: var(--gold-soft); color: var(--gold);
+        border: 1px solid rgba(227, 179, 76, 0.38);
+      }
+      .status.paused .dot { background: var(--gold); }
+      .hero-status.paused {
+        background: var(--gold-soft); border: 1px solid rgba(227, 179, 76, 0.38);
+        color: var(--gold);
+      }
+      .hero-status.paused .dot { background: var(--gold); }
       .weektrack {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
@@ -409,9 +419,9 @@
         <div>
           <p class="hero-kicker">Campaign Performance Report</p>
           <h1>Mexicocina Mezcaleria</h1>
-          <p class="live-badge">Live Advertising · From Oct 30, 2026</p>
-          <p class="hero-sub">Bronx, NY — your advertising reach and website activity, in one place. Ads went live Oct 30 and are delivering now. Tracking connected Nov 5, so the page now shows site visits, carts, and checkouts too. Check it any time — it refreshes daily.</p>
-          <div class="hero-status"><span class="dot pulse"></span> Live · delivering since Oct 30, 2026</div>
+          <p class="live-badge">Week 1 Complete · Oct 30 – Nov 5, 2026</p>
+          <p class="hero-sub">Bronx, NY — your advertising reach and website activity, in one place. Ads ran Oct 30–Nov 5 for week 1 and are paused for now. Tracking connected Nov 5, so the page now shows site visits, carts, and checkouts too. Check it any time — it refreshes daily.</p>
+          <div class="hero-status paused"><span class="dot"></span> Week 1 complete · Paused Nov 6, 2026</div>
         </div>
       </div>
 
@@ -434,7 +444,7 @@
         <div class="week-strip">
           <div class="week-cell">
             <p class="week-label">People Reached</p>
-            <div class="week-num">4,647</div>
+            <div class="week-num">4,650</div>
           </div>
           <div class="week-cell">
             <p class="week-label">Ad Impressions</p>
@@ -442,11 +452,11 @@
           </div>
           <div class="week-cell">
             <p class="week-label">Clicks to Site</p>
-            <div class="week-num">59</div>
+            <div class="week-num">60</div>
           </div>
           <div class="week-cell">
             <p class="week-label">Click-Through Rate</p>
-            <div class="week-num">0.65%</div>
+            <div class="week-num">0.66%</div>
           </div>
         </div>
       </section>
@@ -459,7 +469,7 @@
         <div class="kpis">
           <div class="kpi">
             <p class="kpi-label">People Reached</p>
-            <div class="kpi-num">4,647</div>
+            <div class="kpi-num">4,650</div>
             <p class="kpi-sub">Local customers who saw your ads</p>
           </div>
           <div class="kpi">
@@ -469,12 +479,12 @@
           </div>
           <div class="kpi">
             <p class="kpi-label">Clicks to Site</p>
-            <div class="kpi-num">59</div>
+            <div class="kpi-num">60</div>
             <p class="kpi-sub">Ad clicks that went straight to mexicocinanyc.com</p>
           </div>
           <div class="kpi">
             <p class="kpi-label">Click-Through Rate</p>
-            <div class="kpi-num">0.65%</div>
+            <div class="kpi-num">0.66%</div>
             <p class="kpi-sub">Share of ad views that clicked through to the site</p>
           </div>
         </div>
@@ -500,8 +510,8 @@
           <div class="srow"><div class="srow-top"><span class="srow-name">Nov 2, 2026</span><span class="srow-num">383 impressions · 220 reached · 3 clicks</span></div></div>
           <div class="srow"><div class="srow-top"><span class="srow-name">Nov 3, 2026</span><span class="srow-num">1,599 impressions · 947 reached · 8 clicks</span></div></div>
           <div class="srow"><div class="srow-top"><span class="srow-name">Nov 4, 2026</span><span class="srow-num">1,802 impressions · 879 reached · 14 clicks</span></div></div>
-          <div class="srow"><div class="srow-top"><span class="srow-name">Nov 5, 2026</span><span class="srow-num">1,707 impressions · 1,069 reached · 16 clicks</span></div></div>
-          <p style="color: var(--ink-3);">Totals: 9,080 impressions · 4,647 people reached · 59 clicks. Daily reach adds to more than the total because the same person can be reached on multiple days.</p>
+          <div class="srow"><div class="srow-top"><span class="srow-name">Nov 5, 2026</span><span class="srow-num">1,707 impressions · 1,074 reached · 17 clicks</span></div></div>
+          <p style="color: var(--ink-3);">Totals: 9,080 impressions · 4,650 people reached · 60 clicks. Daily reach adds to more than the total because the same person can be reached on multiple days.</p>
           </div>
         </div>
       </section>
@@ -516,14 +526,14 @@
             <div class="camp-top">
               <div>
                 <p class="camp-name">Sales Campaign 1.0</p>
-                <p class="camp-desc">Lead ads · running since Oct 30, 2026</p>
+                <p class="camp-desc">Lead ads · ran Oct 30–Nov 5, 2026 · paused Nov 6</p>
               </div>
-              <span class="status"><span class="dot"></span>ACTIVE</span>
+              <span class="status paused"><span class="dot"></span>PAUSED</span>
             </div>
             <div class="camp-stats">
-              <div><p class="cstat-label">People Reached</p><p class="cstat-num">4,647</p></div>
+              <div><p class="cstat-label">People Reached</p><p class="cstat-num">4,650</p></div>
               <div><p class="cstat-label">Impressions</p><p class="cstat-num">9,080</p></div>
-              <div><p class="cstat-label">Clicks to Site</p><p class="cstat-num">59</p></div>
+              <div><p class="cstat-label">Clicks to Site</p><p class="cstat-num">60</p></div>
             </div>
           </div>
         </div>
@@ -538,9 +548,9 @@
           <div class="srow">
             <div class="srow-top">
               <span class="srow-name">Ad clicks to site</span>
-              <span class="srow-num">59</span>
+              <span class="srow-num">60</span>
             </div>
-            <div class="track"><div class="fill" style="width:74%"></div></div>
+            <div class="track"><div class="fill" style="width:75%"></div></div>
           </div>
           <div class="srow">
             <div class="srow-top">
@@ -594,8 +604,8 @@
         <div class="sec-head">
           <h2>Highlights</h2>
         </div>
-        <div class="camp-highlight">First results are in: 4,647 people reached, 9,080 impressions, and 59 clicks to the site across Oct 30–Nov 5. Nov 4 was the biggest day yet — 1,802 impressions — and Nov 5 brought the most clicks in a day, 16.</div>
-        <div class="camp-highlight">Tracking connected Nov 5: the pixel recorded its first real events — 80 site visits, 30 menu views, 10 carts, and 4 checkouts started, with no purchases recorded yet. This page refreshes daily — every number is a reported figure, no estimates.</div>
+        <div class="camp-highlight">First results are in: 4,650 people reached, 9,080 impressions, and 60 clicks to the site across Oct 30–Nov 5. Nov 4 was the biggest day yet — 1,802 impressions — and Nov 5 brought the most clicks in a day, 17.</div>
+        <div class="camp-highlight">Tracking connected Nov 5: the pixel recorded its first real events — 80 site visits, 30 menu views, 10 carts, and 4 checkouts started, with no purchases recorded yet. One of those 10 carts came from someone who clicked an ad. This page refreshes daily — every number is a reported figure, no estimates.</div>
       </section>
 
       <footer>
