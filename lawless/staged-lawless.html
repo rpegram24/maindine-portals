@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:," />
+    <title>Lawless Barbecue — Store Traffic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #121110;
+        --bg-raise: #1a1815;
+        --bg-card: #1e1b17;
+        --line: #2e2a24;
+        --line-soft: #26231e;
+        --ink: #f2ede4;
+        --ink-2: #b8b0a1;
+        --ink-3: #857d6e;
+        --ember: #e8762c;
+        --ember-soft: #f0954f;
+        --ember-dim: rgba(232, 118, 44, 0.14);
+        --bar-zero: #35302a;
+        --radius: 10px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        max-width: 1020px;
+        margin: 0 auto;
+        padding: 40px 24px 56px;
+      }
+
+      /* ---------- Header ---------- */
+      header { margin-bottom: 34px; }
+      .biz {
+        font-family: "Barlow Condensed", "Barlow", sans-serif;
+        font-size: 44px;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        line-height: 1.05;
+        margin: 0;
+        text-transform: uppercase;
+      }
+      .biz-sub {
+        margin: 8px 0 0;
+        color: var(--ink-2);
+        font-size: 16px;
+      }
+      .biz-sub a { color: var(--ember-soft); text-decoration: none; }
+      .biz-sub a:hover { text-decoration: underline; }
+      .period {
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 28px;
+        color: var(--ink-3);
+        font-size: 14px;
+      }
+      .period strong { color: var(--ink-2); font-weight: 600; }
+
+      /* ---------- KPI cards ---------- */
+      .kpis {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 30px;
+      }
+      .kpi {
+        background: var(--bg-card);
+        border: 1px solid var(--line-soft);
+        border-radius: var(--radius);
+        padding: 20px 20px 16px;
+      }
+      .kpi .num {
+        font-family: "Barlow Condensed", "Barlow", sans-serif;
+        font-size: 52px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: 0.01em;
+      }
+      .kpi .num.zero { color: var(--ink-3); }
+      .kpi .label {
+        margin-top: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .kpi .sub {
+        margin-top: 2px;
+        font-size: 13px;
+        color: var(--ink-3);
+      }
+
+      /* ---------- Panels ---------- */
+      .panel {
+        background: var(--bg-raise);
+        border: 1px solid var(--line-soft);
+        border-radius: var(--radius);
+        padding: 24px 24px 20px;
+        margin-bottom: 30px;
+      }
+      .panel h2 {
+        font-family: "Barlow Condensed", "Barlow", sans-serif;
+        font-size: 21px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin: 0 0 4px;
+      }
+      .panel .panel-sub {
+        color: var(--ink-3);
+        font-size: 14px;
+        margin: 0 0 18px;
+      }
+
+      /* ---------- Chart ---------- */
+      .chart-scroll { width: 100%; }
+      svg.chart { display: block; width: 100%; height: auto; }
+      .chart-note {
+        margin: 12px 0 0;
+        font-size: 13px;
+        color: var(--ink-3);
+      }
+
+      /* ---------- Funnel strip ---------- */
+      .funnel {
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+      }
+      .fstep {
+        flex: 1 1 0;
+        background: var(--bg-card);
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        padding: 16px 14px 13px;
+        text-align: center;
+        min-width: 0;
+      }
+      .fstep .fnum {
+        font-family: "Barlow Condensed", "Barlow", sans-serif;
+        font-size: 38px;
+        font-weight: 700;
+        line-height: 1;
+      }
+      .fstep .fnum.zero { color: var(--ink-3); }
+      .fstep .flabel {
+        margin-top: 7px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink-2);
+        line-height: 1.3;
+      }
+      .fstep .frate {
+        margin-top: 3px;
+        font-size: 12px;
+        color: var(--ink-3);
+      }
+      .farrow {
+        flex: 0 0 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ink-3);
+        font-size: 16px;
+      }
+      .funnel-note {
+        margin: 14px 0 0;
+        font-size: 13px;
+        color: var(--ink-3);
+      }
+
+      /* ---------- Devices ---------- */
+      .device-list { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
+      .device-row { display: grid; grid-template-columns: 150px 1fr 64px; align-items: center; gap: 14px; }
+      .device-name { font-size: 15px; font-weight: 600; color: var(--ink); }
+      .device-name span { display: block; font-size: 12.5px; font-weight: 400; color: var(--ink-3); }
+      .device-track { background: var(--line-soft); border-radius: 4px; height: 10px; overflow: hidden; }
+      .device-fill { height: 100%; background: var(--ember); border-radius: 4px; }
+      .device-fill.mobile { background: var(--ink-3); }
+      .device-count { font-family: "Barlow Condensed", "Barlow", sans-serif; font-size: 22px; font-weight: 700; text-align: right; line-height: 1; }
+      .device-count span { display: block; font-family: "Barlow", sans-serif; font-size: 12px; font-weight: 400; color: var(--ink-3); margin-top: 3px; }
+      .device-total { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--line-soft); font-size: 14.5px; color: var(--ink-2); }
+      .device-total strong { color: var(--ink); }
+      .device-note { margin: 10px 0 0; font-size: 13px; color: var(--ink-3); }
+      @media (max-width: 720px) {
+        .device-row { grid-template-columns: 118px 1fr 52px; gap: 10px; }
+        .device-name { font-size: 14px; }
+      }
+
+      /* ---------- Highlights ---------- */
+      .highlights { margin-bottom: 30px; }
+      .highlights h2 {
+        font-family: "Barlow Condensed", "Barlow", sans-serif;
+        font-size: 21px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin: 0 0 12px;
+      }
+      .highlights ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .highlights li {
+        padding: 10px 0 10px 22px;
+        position: relative;
+        color: var(--ink-2);
+        font-size: 15.5px;
+        border-top: 1px solid var(--line-soft);
+      }
+      .highlights li:first-child { border-top: none; padding-top: 2px; }
+      .highlights li::before {
+        content: "";
+        position: absolute;
+        left: 2px;
+        top: 19px;
+        width: 7px;
+        height: 7px;
+        border-radius: 2px;
+        background: var(--ember);
+      }
+      .highlights li:first-child::before { top: 11px; }
+      .highlights li strong { color: var(--ink); font-weight: 600; }
+
+      /* ---------- Footer lines ---------- */
+      .no-ads {
+        background: var(--ember-dim);
+        border: 1px solid rgba(232, 118, 44, 0.35);
+        border-radius: var(--radius);
+        padding: 16px 20px;
+        font-size: 15px;
+        color: var(--ink);
+        margin-bottom: 26px;
+      }
+      footer {
+        border-top: 1px solid var(--line);
+        padding-top: 16px;
+        color: var(--ink-3);
+        font-size: 13px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 24px;
+      }
+
+      /* ---------- Mobile ---------- */
+      @media (max-width: 720px) {
+        .wrap { padding: 28px 16px 44px; }
+        .biz { font-size: 34px; }
+        .kpis { grid-template-columns: repeat(2, 1fr); }
+        .kpi .num { font-size: 44px; }
+        .funnel { flex-direction: column; gap: 8px; }
+        .farrow { transform: rotate(90deg); flex-basis: 18px; margin: 0 auto; }
+        .fstep { text-align: left; display: flex; align-items: baseline; gap: 14px; padding: 13px 16px; }
+        .fstep .flabel { margin-top: 0; }
+        .fstep .frate { margin-top: 0; margin-left: auto; }
+        .panel { padding: 20px 16px 16px; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="wrap">
+
+      <header>
+        <h1 class="biz">Lawless Barbecue</h1>
+        <p class="biz-sub">Store traffic for <a href="https://catering.lawlessq.com">catering.lawlessq.com</a> — how many people visit, look at the menu, and order.</p>
+        <div class="period">
+          <span><strong>Tracking window</strong></span>
+          <span>Oct 13 – Nov 10, 2026</span>
+          <span>Store live since late Sep 2026</span>
+        </div>
+      </header>
+
+      <section class="kpis" aria-label="Key numbers, tracking window">
+        <div class="kpi">
+          <div class="num">64</div>
+          <div class="label">Store visits</div>
+          <div class="sub">People who opened the store</div>
+        </div>
+        <div class="kpi">
+          <div class="num">11</div>
+          <div class="label">Menu views</div>
+          <div class="sub">People who looked at an item</div>
+        </div>
+        <div class="kpi">
+          <div class="num">10</div>
+          <div class="label">Added to cart</div>
+          <div class="sub">Items put in a cart</div>
+        </div>
+        <div class="kpi">
+          <div class="num">0</div>
+          <div class="label">Orders</div>
+          <div class="sub">First order Nov 3 — $441.31</div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Daily store visits">
+        <h2>Store visits by day</h2>
+        <p class="panel-sub">Daily breakdown not available in this pull — the store’s tracking showed period totals only, so no day-by-day bars this week.</p>
+      </section>
+
+      <section class="panel" aria-label="From visit to order">
+        <h2>From visit to order</h2>
+        <p class="panel-sub">What store visits turned into this period, step by step.</p>
+        <div class="funnel">
+          <div class="fstep">
+            <div class="fnum">64</div>
+            <div class="flabel">Store visits</div>
+          </div>
+          <div class="farrow" aria-hidden="true">→</div>
+          <div class="fstep">
+            <div class="fnum">11</div>
+            <div class="flabel">Menu views</div>
+            <div class="frate">17% of visits</div>
+          </div>
+          <div class="farrow" aria-hidden="true">→</div>
+          <div class="fstep">
+            <div class="fnum">10</div>
+            <div class="flabel">Added to cart</div>
+            <div class="frate">16% of visits</div>
+          </div>
+          <div class="farrow" aria-hidden="true">→</div>
+          <div class="fstep">
+            <div class="fnum">1</div>
+            <div class="flabel">Checkouts started</div>
+            <div class="frate">2% of visits</div>
+          </div>
+          <div class="farrow" aria-hidden="true">→</div>
+          <div class="fstep">
+            <div class="fnum">1</div>
+            <div class="flabel">Orders</div>
+            <div class="frate">2% of visits</div>
+          </div>
+        </div>
+        <p class="funnel-note">64 visits turned into 11 menu views, 10 carts, 1 checkout, and the first order — Nov 3, $441.31. The store’s tracking shows no completed purchase for this period, but the Nov 3 order is confirmed — that gap is in the tracking, not the orders.</p>
+      </section>
+
+      <section class="panel" aria-label="Who is visiting">
+        <h2>Who’s visiting</h2>
+        <p class="panel-sub">Store visits by device, Oct 13 – Nov 10, 2026.</p>
+        <p class="device-total">Device breakdown for this period is pending refresh.</p>
+        <p class="device-note">Traffic sources (Google, social, direct) aren’t available from Meta — they come from Google Analytics.</p>
+      </section>
+
+      <section class="highlights" aria-label="Highlights">
+        <h2>Where things stand</h2>
+        <ul><li><span><strong>First order Nov 3 — $441.31</strong> — the store’s first order, after 1 checkout started this period.</span></li><li><span><strong>64 store visits this period</strong>, turning into 11 menu views and 10 carts.</span></li></ul>
+      </section>
+
+      <div class="no-ads">No ad campaigns running — this page tracks your store traffic only.</div>
+
+      <footer>
+        <span>Numbers from the store’s tracking (Meta Events Manager, “LawlessQ”)</span>
+        <span>Updated Nov 10, 2026</span>
+        <span>Prepared by MainDine</span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
